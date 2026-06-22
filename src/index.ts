@@ -1,9 +1,9 @@
 export class Yexception<D extends Record<string, Internal.Json> = Record<string, Internal.Json>> extends Error {
   public static readonly NAMESPACE = "@Yexception";
 
-  public static initializeFields(klass: Internal.Class & { Name: string }) {
-    const group = klass.Name;
-    for (const key of Object.keys(klass).filter((key) => key !== ("Name" satisfies keyof typeof klass))) {
+  public static initializeFields(klass: Internal.Class & { NAME: string }) {
+    const group = klass.NAME;
+    for (const key of Object.keys(klass).filter((key) => key !== ("NAME" satisfies keyof typeof klass))) {
       const problem = `${group}::${key}`;
       const YexceptionFn = (details?: Record<string, Internal.Json>) => new Yexception(problem, details);
       YexceptionFn.matches = (otherProblem: unknown) => {
