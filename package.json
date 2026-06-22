@@ -1,7 +1,7 @@
 {
   "name": "yexception",
   "version": "0.0.0-snapshot",
-  "description": "A useful exception library",
+  "description": "Simple and useful exception library",
   "keywords": [
     "exception",
     "error"
@@ -24,9 +24,15 @@
   },
   "scripts": {
     "tc": "tsc --noEmit",
+    "test": "jest",
+    "testw": "jest --watch",
     "build": "rm -rf lib && tsc -p tsconfig.build.json"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.0.0",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
     "typescript": "^6.0.3"
   }
 }

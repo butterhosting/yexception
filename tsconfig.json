@@ -10,6 +10,7 @@
     "target": "es6",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "types": ["node", "jest"],
   },
   "include": ["src/**/*"],
 }

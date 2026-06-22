@@ -30,23 +30,23 @@ jobs:
           node-version: ${{ env.NODE_MAJOR_VERSION }}
           cache: "npm"
 
-      - name: "Setup :: Installation"
-        run: npm install
+      - name: "Setup :: Install"
+        run: npm ci
 
-      - name: "Application :: Type Checking"
+      - name: "Application :: Typecheck"
         run: npm run tc
 
       - name: "Application :: Build"
         run: npm run build
 
-      # - name: "Application :: Tests"
-      #   run: npm test
+      - name: "Application :: Test"
+        run: npm test
 
-      - name: "Release :: Set Version"
+      - name: "Release :: Version"
         if: startsWith(github.ref, 'refs/tags/')
         run: npm version $GITHUB_REF_NAME --git-tag-version false
 
-      - name: "Deployment :: Publish to NPM"
+      - name: "Release :: Publish"
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           VERSION="$(node -p "require('./package.json').version")"
