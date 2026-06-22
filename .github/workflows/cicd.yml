@@ -44,7 +44,9 @@ jobs:
 
       - name: "Release :: Set Version"
         if: startsWith(github.ref, 'refs/tags/')
-        run: npm version $GITHUB_REF_NAME --git-tag-version false
+        run: |
+          npm version $GITHUB_REF_NAME --git-tag-version false
+          cat package.json
 
       - name: "Deployment :: Publish to NPM"
         if: startsWith(github.ref, 'refs/tags/')
