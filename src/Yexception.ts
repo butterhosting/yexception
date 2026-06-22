@@ -16,7 +16,7 @@ export class Yexception<D extends Record<string, Internal.Json> = Record<string,
         return false;
       };
       Object.assign(klass, {
-        [key]: YexceptionFn satisfies Internal.Fn,
+        [key]: YexceptionFn satisfies Yexception.Fn,
       });
     }
   }
@@ -39,6 +39,10 @@ export class Yexception<D extends Record<string, Internal.Json> = Record<string,
 }
 
 export namespace Yexception {
+  export type Fn<T extends Record<string, Internal.Json> | void = void> = T extends void
+    ? Internal.WithMatcher<(details?: Record<string, Internal.Json>) => Yexception>
+    : Internal.WithMatcher<(details: T) => Yexception>;
+
   export type ProblemDetails = {
     problem: string;
     details?: Record<string, any>;
@@ -50,12 +54,9 @@ export namespace Yexception {
     }
   }
 
-  export function isInstance<D extends Record<string, Internal.Json>>(e: any, specific: Internal.Fn<D>): e is Yexception<D>;
+  export function isInstance<D extends Record<string, Internal.Json>>(e: any, specific: Fn<D>): e is Yexception<D>;
   export function isInstance(e: any): e is Yexception;
-  export function isInstance<D extends Record<string, Internal.Json> = Record<string, Internal.Json>>(
-    e: any,
-    specific?: Internal.Fn<D>,
-  ): boolean {
+  export function isInstance<D extends Record<string, Internal.Json> = Record<string, Internal.Json>>(e: any, specific?: Fn<D>): boolean {
     const marker = "namespace" satisfies keyof InstanceType<typeof Yexception>;
     const isYexception = typeof e === "object" && marker in e && e[marker] === Yexception.NAMESPACE;
     if (!isYexception) {
@@ -70,10 +71,7 @@ export namespace Yexception {
 }
 
 namespace Internal {
-  type WithMatcher<T> = T & { matches(otherProblem: unknown): boolean };
-  export type Fn<T extends Record<string, Json> | void = void> = T extends void
-    ? WithMatcher<(details?: Record<string, Json>) => Yexception>
-    : WithMatcher<(details: T) => Yexception>;
+  export type WithMatcher<T> = T & { matches(otherProblem: unknown): boolean };
 
   export type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
 

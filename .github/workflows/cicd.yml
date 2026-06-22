@@ -44,9 +44,7 @@ jobs:
 
       - name: "Release :: Set Version"
         if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          npm version $GITHUB_REF_NAME --git-tag-version false
-          cat package.json
+        run: npm version $GITHUB_REF_NAME --git-tag-version false
 
       - name: "Deployment :: Publish to NPM"
         if: startsWith(github.ref, 'refs/tags/')
@@ -60,5 +58,4 @@ jobs:
             # Stable release (e.g. 1.0.0) -> dist-tag "latest"
             TAG="latest"
           fi
-          echo "Publishing $VERSION with dist-tag: $TAG"
           npm publish --access public --tag "$TAG"
