@@ -1,5 +1,8 @@
 export class Yexception {
-  public static helloWorld(): string {
-    return "Hello World";
+  public static hello(): string {
+    return "Hello";
+  }
+  public static world(): string {
+    return "World";
   }
 }
