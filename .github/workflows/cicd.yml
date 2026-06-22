@@ -48,4 +48,15 @@ jobs:
 
       - name: "Deployment :: Publish to NPM"
         if: startsWith(github.ref, 'refs/tags/')
-        run: npm publish --access public
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          if [[ "$VERSION" == *-* ]]; then
+            # Prerelease (e.g. 1.0.0-alpha.1) -> dist-tag "alpha"
+            TAG="${VERSION#*-}"
+            TAG="${TAG%%.*}"
+          else
+            # Stable release (e.g. 1.0.0) -> dist-tag "latest"
+            TAG="latest"
+          fi
+          echo "Publishing $VERSION with dist-tag: $TAG"
+          npm publish --access public --tag "$TAG"
