@@ -1,0 +1,51 @@
+on:
+  push:
+    tags:
+      - "*"
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  NODE_MAJOR_VERSION: "26"
+
+jobs:
+  cicd:
+    name: "CI/CD Pipeline"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Environment :: Setup"
+        uses: actions/checkout@v6
+
+      - name: "Environment :: Node"
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_MAJOR_VERSION }}
+          cache: "npm"
+
+      - name: "Setup :: Installation"
+        run: npm install
+
+      - name: "Application :: Type Checking"
+        run: npm run tc
+
+      - name: "Application :: Build"
+        run: npm run build
+
+      # - name: "Application :: Tests"
+      #   run: npm test
+
+      - name: "Release :: Set Version"
+        if: startsWith(github.ref, 'refs/tags/')
+        run: npm version $GITHUB_REF_NAME --git-tag-version false
+
+      - name: "Deployment :: Publish to NPM"
+        if: startsWith(github.ref, 'refs/tags/')
+        run: npm publish --access public

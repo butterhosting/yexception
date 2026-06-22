@@ -1,0 +1,29 @@
+{
+  "name": "yexception",
+  "version": "0.0.0-snapshot",
+  "description": "A useful exception library",
+  "keywords": [
+    "exception",
+    "error"
+  ],
+  "homepage": "https://github.com/butterhosting/yexception#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/butterhosting/yexception.git"
+  },
+  "license": "MIT",
+  "author": "Jessy <contact@butterhost.ing>",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "./lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "tc": "tsc --noEmit",
+    "build": "rm -rf lib && tsc -p tsconfig.build.json"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}
