@@ -11,7 +11,9 @@ npm install yexception
 ## Usage
 
 ```ts
+//
 // 1 - Create an error class
+//
 class UserError {
   public static readonly NAME = "UserError";
 
@@ -24,20 +26,28 @@ class UserError {
   }
 }
 
+//
 // 2 - Throw errors
+//
 throw UserError.not_found({ id: 123 });
 throw UserError.email_already_taken({ email: "test@example.com" });
 throw UserError.too_many_login_requests();
 
+//
 // 3 - Check instances
+//
 try {
   throw UserError.not_found({ id: 123 });
 } catch (e: unknown) {
+  //
   // 3a - Generic check (`details` shape unknown)
+  //
   if (Yexception.isInstance(e)) {
     console.log(e.problem); // "UserError::not_found"
   }
+  //
   // 3b - Specific check (`details` shape IS known)
+  //
   if (Yexception.isInstance(e, UserError.not_found)) {
     console.log(e.details.id); // 123
   }
