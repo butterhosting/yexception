@@ -10,8 +10,6 @@ npm install yexception
 
 ## Usage
 
-Declare a custom error class like so:
-
 ```ts
 // 1 - Create an error class
 class UserError {
