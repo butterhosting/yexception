@@ -40,7 +40,7 @@ try {
   throw UserError.not_found({ id: 123 });
 } catch (e: unknown) {
   //
-  // 3a - Generic check (`details` shape unknown)
+  // 3a - Generic check (`details` shape remains unknown)
   //
   if (Yexception.isInstance(e)) {
     console.log(e.problem); // "UserError::not_found"
